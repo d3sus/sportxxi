@@ -1,0 +1,52 @@
+.NewsCard {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-position: center;
+  background-image: url("./dota-v1.jpg");
+  background-size: cover;
+  color: white;
+  border-radius: 20px;
+  padding: 40px 15px;
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  &__title {
+    font-size: 24px;
+  }
+  &__date {
+    font-size: 12px;
+  }
+  &__link {
+    display: inline-block;
+    padding: 10px 20px;
+    border: 2px solid transparent;
+    border-image: linear-gradient(45deg, #ff6a00, #ee0979, #00c6ff, #0072ff);
+    border-image-slice: 1;
+    background: none;
+    color: #0072ff;
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s;
+
+    &:hover {
+      color: #ff6a00;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #ff6a00, #ee0979, #00c6ff, #0072ff);
+      z-index: -1;
+      filter: blur(8px);
+      opacity: 0.6;
+    }
+  }
+}

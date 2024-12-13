@@ -1,0 +1,9 @@
+.Page {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  padding: 0px 40px;
+  &__title {
+    text-align: left;
+  }
+}
