@@ -7,9 +7,10 @@ interface Props {
   subtitle: string;
   author: string;
   id: string;
+  text: string;
 }
 
-const ArticleCard: NextPage<Props> = ({ title, subtitle, author, id }) => {
+const ArticleCard: NextPage<Props> = ({ title, subtitle, author, id, text }) => {
   return (
     <div className={s.ArticleCard}>
       <div className={s.ArticleCard__wrapper}>
@@ -17,9 +18,12 @@ const ArticleCard: NextPage<Props> = ({ title, subtitle, author, id }) => {
         <h3 className={s.ArticleCard__subtitle}>{subtitle}</h3>
         <p className={s.ArticleCard__author}>Автор: {author}</p>
       </div>
-      <Link className={s.ArticleCard__link} href={`/articles/${id}`}>
-        Читать полностью
-      </Link>
+      <div className={s.ArticleCard__info}>
+        <p className={s.ArticleCard__text}>{text}</p>
+        <Link className={s.ArticleCard__link} href={`/articles/${id}`}>
+          Читать полностью
+        </Link>
+      </div>
     </div>
   );
 };

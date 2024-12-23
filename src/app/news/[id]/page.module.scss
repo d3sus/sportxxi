@@ -15,6 +15,8 @@
     width: 100%;
     border-radius: 40px 40px 0px 0px;
     height: 200px;
+    object-fit: cover;
+    object-position: center;
   }
   &__metki {
     padding: 0px 15px;

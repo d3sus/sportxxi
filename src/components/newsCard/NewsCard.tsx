@@ -7,11 +7,12 @@ interface Props {
   date: string;
   id: string;
   filter: string;
+  url: string;
 }
 
-const NewsCard: NextPage<Props> = ({ title, date, id }) => {
+const NewsCard: NextPage<Props> = ({ title, date, id, url = "/dota-v1.jpg" }) => {
   return (
-    <div className={s.NewsCard}>
+    <div className={s.NewsCard} style={{ backgroundImage: `url('${url}')` }}>
       <div className={s.NewsCard__wrapper}>
         <h2 className={s.NewsCard__title}>{title}</h2>
         <h3 className={s.NewsCard__date}>{date}</h3>

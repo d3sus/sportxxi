@@ -1,0 +1,52 @@
+.Page {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  &__title {
+    text-align: center;
+  }
+  .Filter {
+    background-color: black;
+    padding: 15px;
+    border-radius: 15px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    gap: 32px;
+    &__Category {
+      padding: 5px 15px;
+      border-radius: 15px;
+      cursor: pointer;
+      border: 0;
+      outline: 0;
+      background-color: inherit;
+      color: #e2e2e2;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 22.4px;
+    }
+  }
+  .PhotoGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 1fr;
+    gap: 40px;
+  }
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+}
+.Active {
+  border-radius: 15px;
+  padding: 5px 15px;
+  cursor: pointer;
+  border: 0;
+  outline: 0;
+  background-color: rgb(138, 29, 240);
+  color: #e2e2e2;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 22.4px;
+}

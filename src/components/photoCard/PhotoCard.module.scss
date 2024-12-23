@@ -1,0 +1,13 @@
+.PhotoCard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  &__img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  &__title {
+    font-size: 24px;
+  }
+}

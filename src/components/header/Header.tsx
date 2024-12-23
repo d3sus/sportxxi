@@ -18,6 +18,9 @@ const Header: NextPage = ({}) => {
       <Link className={s.Header__link} href={"/photo"}>
         Фото
       </Link>
+      <Link className={s.Header__link} href={"/result"}>
+        Результаты
+      </Link>
 
       <div className={s.Header__socials}>
         <Link href={"/"}>
