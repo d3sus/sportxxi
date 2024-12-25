@@ -4,29 +4,28 @@ import { useState, useEffect } from "react";
 import s from "./page.module.scss";
 
 interface Match {
-  date: string; // Например, "2024-12-15"
-  category: string; // Например, "Футбол", "Баскетбол", "Хоккей"
+  date: string;
+  category: string;
   team1: string;
   score1: number;
   score2: number;
   team2: string;
-  status: string; // Например, "окончено"
+  status: string;
 }
 
 const Page: NextPage = () => {
   const [matches, setMatches] = useState<Match[]>([]);
-  const [dates, setDates] = useState<string[]>([]); // Уникальные даты
-  const [categories, setCategories] = useState<string[]>([]); // Уникальные категории
-  const [selectedDate, setSelectedDate] = useState<string | null>(null); // Фильтрация по дате
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null); // Фильтрация по категории
-  const [loading, setLoading] = useState(true); // Индикатор загрузки
+  const [dates, setDates] = useState<string[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Функция для загрузки данных с сервера
     const fetchMatches = async () => {
       try {
         setLoading(true);
-        const response = await fetch("http://localhost:5500/matches"); // Укажите свой API-эндпоинт
+        const response = await fetch("http://localhost:5500/matches");
         if (!response.ok) {
           throw new Error("Ошибка загрузки данных");
         }
@@ -34,15 +33,12 @@ const Page: NextPage = () => {
 
         setMatches(data);
 
-        // Извлекаем уникальные даты
         const uniqueDates = Array.from(new Set(data.map((match) => match.date))).sort();
         setDates(uniqueDates);
 
-        // Извлекаем уникальные категории
         const uniqueCategories = Array.from(new Set(data.map((match) => match.category)));
         setCategories(uniqueCategories);
 
-        // Устанавливаем текущую дату по умолчанию
         setSelectedDate(uniqueDates[0]);
       } catch (error) {
         console.error(error);
@@ -54,7 +50,6 @@ const Page: NextPage = () => {
     fetchMatches();
   }, []);
 
-  // Фильтрация матчей по дате и категории
   const filteredMatches = matches.filter(
     (match) => (selectedDate === null || match.date === selectedDate) && (selectedCategory === null || match.category === selectedCategory)
   );
@@ -62,28 +57,34 @@ const Page: NextPage = () => {
   return (
     <div className={s.Page}>
       <h1>Результаты игр</h1>
-      <div className={s.Filter}>
-        <span>Матч-центр:</span>
-        {dates.map((date) => (
-          <button key={date} className={date === selectedDate ? s.Active : ""} onClick={() => setSelectedDate(date)}>
-            {new Date(date).toLocaleDateString("ru-RU", {
-              day: "2-digit",
-              month: "2-digit",
-              year: "numeric",
-            })}
-          </button>
-        ))}
-      </div>
-      <div className={s.Filter}>
-        <span>Категория:</span>
-        <button className={selectedCategory === null ? s.Active : ""} onClick={() => setSelectedCategory(null)}>
-          Все
-        </button>
-        {categories.map((category) => (
-          <button key={category} className={category === selectedCategory ? s.Active : ""} onClick={() => setSelectedCategory(category)}>
-            {category}
-          </button>
-        ))}
+      <div className={s.FilterContainer}>
+        <div className={s.Filter}>
+          <span>Матч-центр:</span>
+          <div className={s.Scrollable}>
+            {dates.map((date) => (
+              <button key={date} className={date === selectedDate ? s.Active : ""} onClick={() => setSelectedDate(date)}>
+                {new Date(date).toLocaleDateString("ru-RU", {
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric",
+                })}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className={s.Filter}>
+          <span>Категория:</span>
+          <div className={s.Scrollable}>
+            <button className={selectedCategory === null ? s.Active : ""} onClick={() => setSelectedCategory(null)}>
+              Все
+            </button>
+            {categories.map((category) => (
+              <button key={category} className={category === selectedCategory ? s.Active : ""} onClick={() => setSelectedCategory(category)}>
+                {category}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
       {loading ? (
         <p>Загрузка...</p>
