@@ -23,3 +23,19 @@
     }
   }
 }
+.Page__block__textPreview, 
+.NewsCard__text {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+
+  p {
+    margin: 0 0 10px;
+    line-height: 1.5;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}

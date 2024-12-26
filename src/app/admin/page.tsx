@@ -158,7 +158,7 @@ const Page: NextPage<Props> = ({}) => {
           </div>
           <div className={s.Page__block__wrapper__input}>
             <p>Текст новости</p>
-            <input placeholder="text" className={s.Page__block__input} value={newsText} onChange={(e) => setNewsText(e.target.value)} />
+            <p><textarea placeholder="text" className={s.Page__block__input} value={newsText} onChange={(e) => setNewsText(e.target.value)} /></p>
           </div>
           <button className={s.Page__block__button} onClick={() => addNews(newsUrl, newsTitle, newsDate, newsFilter, newsText)}>
             Добавить запись
@@ -188,7 +188,7 @@ const Page: NextPage<Props> = ({}) => {
           </div>
           <div className={s.Page__block__wrapper__input}>
             <p>Текст статьи</p>
-            <input placeholder="text" className={s.Page__block__input} value={articleText} onChange={(e) => setArticleText(e.target.value)} />
+            <p><textarea placeholder="text" className={s.Page__block__input} value={articleText} onChange={(e) => setArticleText(e.target.value)} /></p>
           </div>
           <button className={s.Page__block__button} onClick={() => addArticle(articleTitle, articleSubtitle, articleAuthor, articleText)}>
             Добавить запись
