@@ -46,13 +46,23 @@ const Page: NextPage<Props> = ({}) => {
 
   const addArticle = async (title, subtitle, author, text) => {
     try {
+      // Разбиваем текст на абзацы
+      const paragraphs = text
+        .split("\n")
+        .filter((line) => line.trim() !== "") // Убираем пустые строки
+        .map((line) => `<p>${line.trim()}</p>`); // Обрезаем пробелы и оборачиваем в <p>
+
+      // Объединяем абзацы в единую строку
+      const formattedText = paragraphs.join("");
+
       const response = await fetch("http://localhost:5500/articles/add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ title, subtitle, author, text }),
+        body: JSON.stringify({ title, subtitle, author, text: formattedText }),
       });
+
       if (response.ok) {
         const result = await response.json();
         setArticleMessage(`News added successfully! ID: ${result.id}`);

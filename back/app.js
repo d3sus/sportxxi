@@ -130,7 +130,7 @@ app.post("/matches/add", async (req, res) => {
     const values = [date, category, team1, score1, score2, team2, status];
 
     const result = await pool.query(query, values);
-    res.status(201).json(result.rows[0]); // Возвращаем добавленную запись
+    res.status(201).json(result.rows[0]);
   } catch (error) {
     console.error("Ошибка при добавлении записи:", error);
     res.status(500).send("Ошибка сервера.");

@@ -2,6 +2,9 @@
   display: flex;
   flex-direction: column;
   gap: 32px;
+  @media (max-width: 768px) {
+    padding: 0px 15px;
+  }
   &__input {
     padding: 15px;
     font-size: 18px;

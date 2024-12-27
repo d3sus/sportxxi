@@ -3,6 +3,15 @@
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, 1fr);
   gap: 40px;
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+  }
+  &__title {
+    @media (max-width: 768px) {
+      font-size: 14px;
+    }
+  }
   &__card {
     display: flex;
     flex-direction: column;

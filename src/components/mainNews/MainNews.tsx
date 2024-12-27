@@ -1,5 +1,7 @@
+"use client";
 import { NextPage } from "next";
 import s from "./MainNews.module.scss";
+import { useEffect, useState } from "react";
 
 const data = [
   {
@@ -25,13 +27,24 @@ const data = [
 ];
 
 const MainNews: NextPage = ({}) => {
+  const [data, setData] = useState([]);
+
+  const fetching = async () => {
+    const response = await fetch("http://localhost:5500/news");
+    const data = await response.json();
+    setData(data);
+  };
+
+  useEffect(() => {
+    fetching();
+  }, []);
   return (
     <div className={s.MainNews__content}>
-      {data.map((elem, index) => (
+      {data.slice(0, 4).map((elem, index) => (
         <div className={s.MainNews__content__card} key={index}>
-          <h2>{elem.title}</h2>
+          <h2 className={s.MainNews__content__title}>{elem.title}</h2>
           <div className={s.MainNews__content__card__wrapper}>
-            <span className={s.MainNews__content__card__number}>{elem.number}</span>
+            <span className={s.MainNews__content__card__number}>{index + 1}</span>
             <p>{elem.text}</p>
           </div>
         </div>

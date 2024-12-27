@@ -1,46 +1,13 @@
 "use client";
 
 import { NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import s from "./MainFilters.module.scss";
-
-const data = [
-  {
-    src: "url",
-    filter: "football",
-    text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illo ipsa animi dolore odit quos quibusdam dolores aperiam, dignissimos, laborum sed obcaecati. Voluptatibus enim suscipit hic quis consectetur mollitia ex quas!",
-  },
-  {
-    src: "url",
-    filter: "basketball",
-    text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illo ipsa animi dolore odit quos quibusdam dolores aperiam, dignissimos, laborum sed obcaecati. Voluptatibus enim suscipit hic quis consectetur mollitia ex quas!",
-  },
-  {
-    src: "url",
-    filter: "esports",
-    text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illo ipsa animi dolore odit quos quibusdam dolores aperiam, dignissimos, laborum sed obcaecati. Voluptatibus enim suscipit hic quis consectetur mollitia ex quas!",
-  },
-  {
-    src: "url",
-    filter: "football",
-    text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illo ipsa animi dolore odit quos quibusdam dolores aperiam, dignissimos, laborum sed obcaecati. Voluptatibus enim suscipit hic quis consectetur mollitia ex quas!",
-  },
-  {
-    src: "url",
-    filter: "all",
-    text: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illo ipsa animi dolore odit quos quibusdam dolores aperiam, dignissimos, laborum sed obcaecati. Voluptatibus enim suscipit hic quis consectetur mollitia ex quas!",
-  },
-];
-
-const filters = [
-  { label: "Весь спорт", value: "all" },
-  { label: "Футбол", value: "football" },
-  { label: "Баскетбол", value: "basketball" },
-  { label: "Киберспорт", value: "esports" },
-];
 
 const MainFilters: NextPage = () => {
   const [activeFilter, setActiveFilter] = useState("all");
+  const [data, setData] = useState([]);
+  const [categories, setCategories] = useState([{ label: "Весь спорт", value: "all" }]);
 
   const handleFilterChange = (filter: string) => {
     setActiveFilter(filter);
@@ -48,11 +15,31 @@ const MainFilters: NextPage = () => {
 
   const filteredData = data.filter((item) => activeFilter === "all" || item.filter === activeFilter);
 
+  const fetching = async () => {
+    const response = await fetch("http://localhost:5500/news");
+    const fetchedData = await response.json();
+
+    const uniqueCategories = [
+      { label: "Весь спорт", value: "all" },
+      ...Array.from(new Set(fetchedData.map((item: any) => item.filter))).map((filter: string) => ({
+        label: filter.charAt(0).toUpperCase() + filter.slice(1), // Преобразуем название фильтров
+        value: filter,
+      })),
+    ];
+
+    setCategories(uniqueCategories);
+    setData(fetchedData);
+  };
+
+  useEffect(() => {
+    fetching();
+  }, []);
+
   return (
     <div className={s.MainFilters__wrapper}>
       <div className={s.MainFilters__filters}>
         <div className={s.MainFilters__filters__wrapper}>
-          {filters.map((filter) => (
+          {categories.map((filter) => (
             <span
               key={filter.value}
               className={`${s.MainFilters__filters__link} ${activeFilter === filter.value ? s.active : ""}`}
@@ -66,7 +53,7 @@ const MainFilters: NextPage = () => {
       <div className={s.MainFilters__news}>
         {filteredData.map((elem, index) => (
           <div className={s.MainFilters__news__card} key={index}>
-            <div className={s.MainFilters__news__card__image}></div>
+            <img className={s.MainFilters__news__card__image} src={elem.url} />
             <p className={s.MainFilters__news__card__text}>{elem.text}</p>
           </div>
         ))}
